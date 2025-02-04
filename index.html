@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Tadka - Authentic Indian Cuisine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #fdfbfb, #fcfcfc);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+
+        }
+
+        /* Updated color scheme */
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #DAA520;
+            --accent-color: #CD853F;
+            --background-light: #FDF5E6;
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: white;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .parallax-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .menu-card:hover {
+            transform: rotateY(10deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #f0f0f0, #ffffff);
+            box-shadow: 5px 5px 15px #d1d1d1, -5px -5px 15px #ffffff;
+        }
+
+        .review-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #FF6347;
+            transition: width 0.3s;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .glowing-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glowing-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 99, 71, 0.4) 0%, transparent 70%);
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+
+        .glowing-button:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 120px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Updated Navigation with Mobile Menu -->
+    <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-3xl md:text-4xl font-bold text-[#8B4513] font-['Caveat'] animate-pulse">
+                    Desi Tadka
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="nav-item text-gray-800 hover:text-[#CD853F] transition">Home</a>
+                    <a href="#menu" class="nav-item text-gray-800 hover:text-[#CD853F] transition">Menu</a>
+                    <a href="#gallery" class="nav-item text-gray-800 hover:text-[#CD853F] transition">Gallery</a>
+                    <a href="#contact" class="nav-item text-gray-800 hover:text-[#CD853F] transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-2xl menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div class="mobile-menu">
+            <div class="p-4">
+                <button class="text-2xl mb-4 close-menu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-lg py-2 px-4 hover:bg-gray-100 rounded">Home</a>
+                    <a href="#menu" class="text-lg py-2 px-4 hover:bg-gray-100 rounded">Menu</a>
+                    <a href="#gallery" class="text-lg py-2 px-4 hover:bg-gray-100 rounded">Gallery</a>
+                    <a href="#contact" class="text-lg py-2 px-4 hover:bg-gray-100 rounded">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="h-screen flex items-center parallax-bg relative" style="background-image: url('1.png');">
+        <div class="container mx-auto px-4 text-center text-white relative z-10" data-aos="fade-up">
+            <h1 class="text-7xl font-bold mb-6 drop-shadow-2xl text-yellow-200 animate-bounce">Taste the Authentic Desi
+                Flavor</h1>
+            <p class="text-3xl mb-10 drop-shadow-xl font-['Caveat'] text-yellow-100">Where Tradition Meets Culinary
+                Excellence</p>
+            <a href="tel:+919897002272"
+                class="bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-full text-xl transition transform hover:scale-110 inline-block glowing-button">
+                Order Now <i class="fas fa-phone ml-3"></i>
+            </a>
+        </div>
+        <div class="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+                    opacity=".25" fill="#FFFFFF"></path>
+                <path
+                    d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+                    opacity=".5" fill="#FFFFFF"></path>
+                <path
+                    d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                    fill="#FFFFFF"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Gallery Carousel -->
+<section id="gallery" class="py-24 bg-white relative overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-16">
+            <span class="text-4xl text-[#DAA520] font-['Caveat'] block mb-4" data-aos="fade-up">Our Gallery</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-black" data-aos="fade-up" data-aos-delay="100">
+                A Visual Feast of Flavors
+            </h2>
+        </div>
+
+        <div class="swiper mySwiper" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide p-4">
+                    <div class="relative group overflow-hidden rounded-3xl">
+                        <img src="1.png" class="w-full h-[600px] object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Gallery Image 1">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                </div>
+                <div class="swiper-slide p-4">
+                    <div class="relative group overflow-hidden rounded-3xl">
+                        <img src="2.png" class="w-full h-[600px] object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Gallery Image 2">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                </div>
+                <div class="swiper-slide p-4">
+                    <div class="relative group overflow-hidden rounded-3xl">
+                        <img src="3.png" class="w-full h-[600px] object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Gallery Image 3">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination !bottom-6"></div>
+            <div class="swiper-button-next !text-[#DAA520] after:!text-2xl"></div>
+            <div class="swiper-button-prev !text-[#DAA520] after:!text-2xl"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Opening Hours -->
+<section id="hours" class="py-24 bg-[#2C1810] relative overflow-hidden">
+    <div class="absolute inset-0 bg-[#DAA520] opacity-5 pattern-diagonal-lines"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-4xl text-[#DAA520] font-['Caveat'] block mb-4" data-aos="fade-up">Visit Us</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white" data-aos="fade-up" data-aos-delay="100">
+                    Opening Hours
+                </h2>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md p-12 rounded-3xl shadow-2xl border border-white/10" data-aos="fade-up" data-aos-delay="200">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center md:text-left">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-[#DAA520] rounded-full mb-6">
+                            <i class="fas fa-clock text-white text-3xl"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Daily Service Hours</h3>
+                        <p class="text-xl text-white/80">Experience culinary excellence</p>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <div class="text-4xl font-bold text-[#DAA520] mb-4">11:00 AM - 11:00 PM</div>
+                        <p class="text-white/80 text-xl">Open Every Day</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Menu Section -->
+<section id="menu" class="py-24 bg-[#1A1A1A] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-16">
+            <span class="text-4xl text-[#DAA520] font-['Caveat'] block mb-4" data-aos="fade-up">Our Menu</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8" data-aos="fade-up" data-aos-delay="100">
+                Culinary Masterpieces
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8" data-aos="fade-up" data-aos-delay="200">
+            <!-- Signature Thali -->
+            <div class="group">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10 transform transition-all duration-500 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://imgs.search.brave.com/kpqqtjYzPOq70-u6vT2QnSozJaVCUf24vbSKYxIYqSo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9saDMu/Z29vZ2xldXNlcmNv/bnRlbnQuY29tL0cz/SXVjRE54cWlCcXdL/N01iTXJEeS1FRERm/ZUpBU0ZWVnI4dXhX/OUtOVGI0cFgzclZP/MldqejVZVnhqTm9f/N1RRWkY1cko5YXdY/LVZua01BTWZ2YVJl/V1dyTFptPXc0MDAt/cnc" class="w-full h-72 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Signature Thali">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Signature Thali</h3>
+                    <p class="text-white/70">A royal feast featuring our finest dishes, dal makhani, butter naan, and more</p>
+                </div>
+            </div>
+
+            <!-- North Indian Specials -->
+            <div class="group">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10 transform transition-all duration-500 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://imgs.search.brave.com/ZB1mhIAvmDUeQ1LC2Buh2BbnC8ZXh955CX7vmpqYd7k/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9saDMu/Z29vZ2xldXNlcmNv/bnRlbnQuY29tLzZ2/YlhLeVNPVXAwWVJJ/eWZiQXBRSE1VdDV0/UzNEc2JsaHNnT2Nr/SUl3N0RvYUVnTERy/d3Jzc25wSDFQa3RF/Rk1VZjhOMlZVYV81/RHFCaXh1ZlpJTmxu/bmRENEJ6PXc0MDAt/cnc" class="w-full h-72 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="North Indian Specials">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">North Indian Specials</h3>
+                    <p class="text-white/70">Classic dishes including butter chicken, paneer tikka, and biryani</p>
+                </div>
+            </div>
+
+            <!-- Tandoor Delights -->
+            <div class="group">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/10 transform transition-all duration-500 hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-2xl mb-6">
+                        <img src="https://imgs.search.brave.com/gh5sc7ljDvs1uMEVNqdFHHItUrufChURmlbjMQQNwho/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9saDMu/Z29vZ2xldXNlcmNv/bnRlbnQuY29tL1Bu/VGIwWnJZU1ZqR2d3/QTBUTWpqeUdyODYw/OWVqVDlRTzlQQ3du/emNTRGxtZm1URXgw/R0hNOGhtZU00OWF1/Wk1kQ0VQaEdRdngw/STFXdmJ1VlZlcjBJ/T1A1dUk9dzQwMC1y/dw" class="w-full h-72 object-cover transform transition-transform duration-700 group-hover:scale-110" alt="Tandoor Delights">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Tandoor Delights</h3>
+                    <p class="text-white/70">Fresh from our tandoor: naan, kebabs, and tandoori roti</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-16" data-aos="fade-up" data-aos-delay="300">
+            <a href="https://www.justdial.com/Roorkee/Desi-tadka-Civil-Lines/9999P1332-1332-210407125907-M2H7_BZDET/menu" target="_blank" 
+               class="inline-flex items-center px-8 py-4 bg-[#DAA520] hover:bg-[#B8860B] text-white rounded-full text-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#DAA520]/20">
+                Explore Full Menu
+                <i class="fas fa-arrow-right ml-3 transition-transform duration-300 group-hover:translate-x-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Customer Reviews -->
+<section id="reviews" class="py-20 bg-gradient-to-br from-[#FDF5E6] to-white relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-32 h-32 bg-[#DAA520]/10 rounded-full -translate-x-16 -translate-y-16"></div>
+    <div class="absolute bottom-0 right-0 w-40 h-40 bg-[#8B4513]/10 rounded-full translate-x-20 translate-y-20"></div>
+
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-[#8B4513]" data-aos="fade-up">
+            <span class="block text-xl text-[#CD853F] mb-4 font-['Caveat']">What People Say</span>
+            Customer Experiences
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8 relative">
+            <!-- Review Card 1 -->
+            <div class="review-card group" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 relative z-10 hover:-translate-y-2">
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-4 w-12 h-12 bg-[#DAA520] rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-quote-right text-white text-xl"></i>
+                    </div>
+                    <div class="flex gap-1 text-[#DAA520] text-2xl mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="italic text-gray-700 mb-6 leading-relaxed">"Absolutely loved the authentic flavors! The Tandoori dishes are simply outstanding. Best North Indian cuisine in town."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#8B4513]/20 rounded-full flex items-center justify-center">
+                            <span class="text-[#8B4513] font-bold text-xl">RS</span>
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-semibold text-[#8B4513]">Rahul Sharma</div>
+                            <div class="text-sm text-[#CD853F]">Regular Customer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 2 -->
+            <div class="review-card group" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 relative z-10 hover:-translate-y-2">
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-4 w-12 h-12 bg-[#DAA520] rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-quote-right text-white text-xl"></i>
+                    </div>
+                    <div class="flex gap-1 text-[#DAA520] text-2xl mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="italic text-gray-700 mb-6 leading-relaxed">"The Signature Thali is a must-try! Perfect portion sizes and the service is exceptional. Will definitely come back."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#8B4513]/20 rounded-full flex items-center justify-center">
+                            <span class="text-[#8B4513] font-bold text-xl">PK</span>
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-semibold text-[#8B4513]">Priya Kapoor</div>
+                            <div class="text-sm text-[#CD853F]">Food Blogger</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Card 3 -->
+            <div class="review-card group" data-aos="fade-up" data-aos-delay="300">
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 relative z-10 hover:-translate-y-2">
+                    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-4 w-12 h-12 bg-[#DAA520] rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-quote-right text-white text-xl"></i>
+                    </div>
+                    <div class="flex gap-1 text-[#DAA520] text-2xl mb-6">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="italic text-gray-700 mb-6 leading-relaxed">"Great ambiance and even better food. The butter chicken and dal makhani are to die for! Highly recommended."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#8B4513]/20 rounded-full flex items-center justify-center">
+                            <span class="text-[#8B4513] font-bold text-xl">AM</span>
+                        </div>
+                        <div class="ml-4">
+                            <div class="font-semibold text-[#8B4513]">Amit Mehta</div>
+                            <div class="text-sm text-[#CD853F]">Family Diner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-[#2C1810] relative overflow-hidden">
+        <!-- Decorative Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0"
+                style="background-image: url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white" data-aos="fade-up">
+                <span class="block text-xl text-[#DAA520] mb-4 font-['Caveat']">Get in Touch</span>
+                Connect With Us
+            </h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8" data-aos="fade-up">
+                <!-- Zomato -->
+                <a href="https://www.zomato.com/roorkee/desi-tadka-second-wife-roorkee-locality/order" target="_blank"
+                    class="contact-card group">
+                    <div
+                        class="bg-white/10 backdrop-blur-md p-6 rounded-2xl hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-[#DAA520] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fab fa-zomato text-white text-3xl">Z</i>
+                        </div>
+                        <span
+                            class="block text-white group-hover:text-[#DAA520] transition-colors duration-300">Zomato</span>
+                    </div>
+                </a>
+
+                <!-- Google Maps -->
+                <a href="https://www.google.com/maps?cid=3597885606352490207" target="_blank"
+                    class="contact-card group">
+                    <div
+                        class="bg-white/10 backdrop-blur-md p-6 rounded-2xl hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-[#DAA520] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-map-marker-alt text-white text-3xl"></i>
+                        </div>
+                        <span class="block text-white group-hover:text-[#DAA520] transition-colors duration-300">Google
+                            Maps</span>
+                    </div>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/viraajsi" target="_blank" class="contact-card group">
+                    <div
+                        class="bg-white/10 backdrop-blur-md p-6 rounded-2xl hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-[#DAA520] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fab fa-facebook text-white text-3xl"></i>
+                        </div>
+                        <span
+                            class="block text-white group-hover:text-[#DAA520] transition-colors duration-300">Facebook</span>
+                    </div>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/+919897002272?text=Hello!%20I%20came%20across%20your%20restaurant%20on%20Restaurant%20Guru%20website!"
+                    target="_blank" class="contact-card group">
+                    <div
+                        class="bg-white/10 backdrop-blur-md p-6 rounded-2xl hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-[#DAA520] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fab fa-whatsapp text-white text-3xl"></i>
+                        </div>
+                        <span
+                            class="block text-white group-hover:text-[#DAA520] transition-colors duration-300">WhatsApp</span>
+                    </div>
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+919897002272" class="contact-card group">
+                    <div
+                        class="bg-white/10 backdrop-blur-md p-6 rounded-2xl hover:bg-white/20 transition-all duration-500 transform hover:-translate-y-2 text-center">
+                        <div
+                            class="w-16 h-16 mx-auto bg-[#DAA520] rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
+                            <i class="fas fa-phone text-white text-3xl"></i>
+                        </div>
+                        <span class="block text-white group-hover:text-[#DAA520] transition-colors duration-300">Call
+                            Now</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="py-20 bg-gradient-to-br from-white to-[#FDF5E6] relative">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-[#8B4513]">
+                        <span class="block text-xl text-[#CD853F] mb-4 font-['Caveat']">Find Us</span>
+                        Our Location
+                    </h2>
+                    <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                        Find us at the heart of Roorkee, serving authentic desi cuisine that brings people together.
+                    </p>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500">
+                        <div class="flex items-start space-x-4">
+                            <div
+                                class="w-12 h-12 bg-[#DAA520] rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-pin text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-semibold text-[#8B4513] mb-4">Address Details</h3>
+                                <p class="text-gray-700">Desi Tadka Restaurant, Civil Lines</p>
+                                <p class="text-gray-700">Roorkee, Uttarakhand</p>
+                                <a href="https://www.google.com/maps?cid=3597885606352490207" target="_blank"
+                                    class="inline-flex items-center mt-4 text-[#DAA520] hover:text-[#8B4513] transition-colors duration-300">
+                                    <span>Get Directions</span>
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <div class="relative">
+                        <!-- Decorative Elements -->
+                        <div class="absolute -inset-4 bg-[#DAA520]/20 rounded-2xl transform -rotate-3"></div>
+                        <div class="absolute -inset-4 bg-[#8B4513]/20 rounded-2xl transform rotate-3"></div>
+
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-2xl relative">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6919.603909563341!2d77.8997495!3d29.86998485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390eb357a16e924f%3A0xfa196aeee9eb0aaa!2sDesi%20tadka!5e0!3m2!1sen!2sin!4v1738654425002!5m2!1sen!2sin"
+                                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                class="relative z-10"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this CSS to your existing styles -->
+    <style>
+        .contact-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(218, 165, 32, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .review-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer class="relative bg-gradient-to-br from-[#2C1810] to-[#3D2314] text-white py-16">
+        <!-- Decorative Top Border -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#DAA520] via-[#CD853F] to-[#DAA520]"></div>
+
+        <!-- Main Footer Content -->
+        <div class="container mx-auto px-4">
+            <!-- Logo and Content Grid -->
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-12 mb-12">
+                <!-- Brand Section -->
+                <div class="text-center md:text-left space-y-4">
+                    <h3 class="text-3xl font-['Caveat'] font-bold text-[#DAA520]">Desi Tadka</h3>
+                    <p class="text-gray-300">Authentic Indian Cuisine that brings the true essence of traditional
+                        flavors to your plate.</p>
+                    <div class="flex justify-center md:justify-start space-x-4 pt-4">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-[#8B4513]/30 hover:bg-[#DAA520] flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-[#8B4513]/30 hover:bg-[#DAA520] flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-[#8B4513]/30 hover:bg-[#DAA520] flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-semibold mb-6 text-[#DAA520]">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#home"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-chevron-right text-sm mr-2 text-[#DAA520]"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#menu"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-chevron-right text-sm mr-2 text-[#DAA520]"></i>
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#gallery"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-chevron-right text-sm mr-2 text-[#DAA520]"></i>
+                                Gallery
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#contact"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-chevron-right text-sm mr-2 text-[#DAA520]"></i>
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Opening Hours -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-semibold mb-6 text-[#DAA520]">Opening Hours</h3>
+                    <ul class="space-y-3">
+                        <li class="text-gray-300 flex items-center justify-center md:justify-start">
+                            <i class="far fa-clock text-[#DAA520] mr-2"></i>
+                            Mon - Sun: 11:00 - 23:00
+                        </li>
+                        <li class="text-gray-300 flex items-center justify-center md:justify-start">
+                            <i class="fas fa-utensils text-[#DAA520] mr-2"></i>
+                            Lunch: 11:00 - 15:30
+                        </li>
+                        <li class="text-gray-300 flex items-center justify-center md:justify-start">
+                            <i class="fas fa-moon text-[#DAA520] mr-2"></i>
+                            Dinner: 18:30 - 23:00
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-semibold mb-6 text-[#DAA520]">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="tel:+919897002272"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-phone-alt text-[#DAA520] mr-2"></i>
+                                +91 9897002272
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-envelope text-[#DAA520] mr-2"></i>
+                                info@desitadka.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="text-gray-300 hover:text-[#DAA520] transition-colors duration-300 flex items-center justify-center md:justify-start">
+                                <i class="fas fa-map-marker-alt text-[#DAA520] mr-2"></i>
+                                Roorkee, Uttarakhand
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="pt-8 mt-8 border-t border-[#DAA520]/20">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm text-center md:text-left mb-4 md:mb-0">
+                        &copy; 2024 <span class="text-[#DAA520]">Desi Tadka</span>. All Rights Reserved.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="#"
+                            class="text-gray-400 hover:text-[#DAA520] text-sm transition-colors duration-300">Privacy
+                            Policy</a>
+                        <span class="text-gray-600">|</span>
+                        <a href="#"
+                            class="text-gray-400 hover:text-[#DAA520] text-sm transition-colors duration-300">Terms of
+                            Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative Bottom Border -->
+        <div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-[#DAA520] via-[#CD853F] to-[#DAA520]">
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const closeMenu = document.querySelector('.close-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.style.display = 'block';
+            setTimeout(() => {
+                mobileMenu.classList.add('active');
+            }, 10);
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            setTimeout(() => {
+                mobileMenu.style.display = 'none';
+            }, 300);
+        });
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                setTimeout(() => {
+                    mobileMenu.style.display = 'none';
+                }, 300);
+            });
+        });
+
+        // Smooth scroll functionality
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+
+        // Initialize AOS
+        AOS.init({
+            duration: 1200,
+            once: true
+        });
+
+        // Swiper Carousel Initialization
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+</body>
+
+</html>
